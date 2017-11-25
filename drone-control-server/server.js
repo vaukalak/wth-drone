@@ -7,7 +7,7 @@ const stdin = process.openStdin();
 
 stdin.addListener('data', (initialD) => {
   const d = initialD.toString().trim();
-  console.log(typeof d);
+
   if (d === 'exit') {
     console.log('BYE');
     process.exit();
@@ -19,6 +19,14 @@ stdin.addListener('data', (initialD) => {
   if (d === 'land') {
     console.log('LAND');
     drone.land();
+  }
+  if(d === 'fire') {
+      console.log('ESTINGUISH');
+      drone.extinguish();
+  }
+  if (d === 'debug') {
+      console.log('DEBUG CONNECTION');
+      drone.debug();
   }
   console.log(`you entered: ${d}`);
 });

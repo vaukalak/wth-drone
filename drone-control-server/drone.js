@@ -13,6 +13,17 @@ function land() {
   rollingSpider.land(landCb);
 }
 
+function emergancy() {
+  rollingSpider.emergancy();
+}
+
+function debug() {
+    rollingSpider.connect(() => {
+      console.log('Connected to drone');
+      rollingSpider.disconnect(() => console.log('disconnected'))
+  });
+}
+
 function extinguish() {
   console.log('Going to extinguish, waiting for connect');
   rollingSpider.connect(() => {
@@ -47,12 +58,11 @@ function extinguish() {
   });
 }
 
-function emergancy() {
-  rollingSpider.emergancy();
-}
+
 
 module.exports = {
   extinguish,
   emergancy,
   land,
+  debug
 };
