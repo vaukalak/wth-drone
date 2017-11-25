@@ -9,10 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bluetooth-hci-socket": "^0.5.1",
-    "rolling-spider": "^1.7.0",
     "serialport": "^6.0.4",
-    "superagent": "^3.8.1",
-    "temporal": "^0.6.0"
+    "superagent": "^3.8.1"
   }
 }

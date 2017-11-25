@@ -2,6 +2,26 @@ const express = require('express');
 const drone = require('./drone');
 const bodyParser = require('body-parser');
 const app = express();
+const stdin = process.openStdin();
+
+stdin.addListener("data", function(d) {
+    d = d.toString().trim();
+    console.log(typeof d);
+    if (d == 'exit') {
+        console.log('BYE');
+        process.exit()
+    } 
+    if (d == 'e') {
+        console.log('TURN OFF');
+        drone.emergancy()
+    }
+    if (d == 'land') {
+        console.log('LAND');
+        drone.land();
+    }
+    console.log("you entered: " + d);
+  });
+
 app.use(bodyParser.urlencoded({
     extended: false
 }));

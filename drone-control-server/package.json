@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bluetooth-hci-socket": "^0.5.1",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "rolling-spider": "^1.7.0",
