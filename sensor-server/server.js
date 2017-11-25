@@ -4,13 +4,11 @@ const port = new SerialPort('/dev/ttyACM1', {
 });
 const request = require('superagent');
 const api = 'http://c56fd690.ngrok.io';
-const TRESHOLD = 51;
+const TRESHOLD = 2;
 
 port.on('data',  (bytes) => {
-    let level = bytes[0].toString();
-    console.log(level); 
-    
-    
+    let level = bytes.toString("ascii");
+ 
     if(level > TRESHOLD) {
         console.log('sending');
         request
