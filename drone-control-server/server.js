@@ -47,6 +47,16 @@ app.post('/fire-alarm', (req, res) => {
   res.send(message);
 });
 
+app.post('/fire-detected', (req, res) => {
+
+  const message = `Fire in the hole detected!`;
+  console.log(message);
+
+  //drone.extinguish(sensorId);
+
+  res.send(message);
+});
+
 app.listen(3000);
 
 console.log('drone control server started');
