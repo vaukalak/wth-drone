@@ -8,18 +8,22 @@ rollingSpider.connect(function () {
     console.log('initial connect')
     rollingSpider.setup(function () {
         console.log('Connected to drone', rollingSpider.name);
-        rollingSpider.flatTrim();
-        rollingSpider.takeOff();
-        rollingSpider.flatTrim();
-        console.log('takeoff')
-
         temporal.queue([
+            {
+        delay: 1000,
+        task: function () {
+            console.log('takeoff');
+            rollingSpider.flatTrim();
+            rollingSpider.takeOff();
+            rollingSpider.flatTrim();
+            }
+          },
 
             {
                 delay: 2000,
                 task: function () {
                     console.log('forward');
-                    rollingSpider.forward({steps: 4});
+                    rollingSpider.forward({steps: 10});
                 }
             },
             {
