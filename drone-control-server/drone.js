@@ -1,60 +1,82 @@
 const RollingSpider = require('rolling-spider');
 const temporal = require('temporal');
 
-const rollingSpider = new RollingSpider();
+const ourLog = (...args) => {
+    if (false) {
+        console.log(...args);    
+    }
+}
+
+let connected = false;
+
+const rollingSpider = new RollingSpider({
+    logger: console.log
+});
+
+const delay = time => new Promise(
+  (res) => {
+    setTimeout(res, time)
+  } 
+);
+
+const waitForCb = (cb) => new Promise(
+  (res) => {
+    cb(res);
+  }
+);
 
 function landCb() {
   console.log('land callback called');
   temporal.clear();
 }
 
+function takeOff() {
+  console.log('takeoff');
+  rollingSpider.flatTrim();
+  rollingSpider.takeOff();
+  rollingSpider.flatTrim();
+}
+
 function land() {
-  console.log('land');
   rollingSpider.land(landCb);
+}
+
+function flip() {
+    // flips
+
+    rollingSpider.frontFlip()
+    // 
+    // await delay(2000);
+    // rollingSpider.backFlip()
+    // 
+    // await delay(2000);
+    // rollingSpider.rightFlip()
+    // 
+    // await delay(2000);
+    // rollingSpider.leftFlip()
 }
 
 function emergancy() {
   rollingSpider.emergancy();
 }
 
-function debug() {
-    rollingSpider.connect(() => {
-      console.log('Connected to drone');
-      rollingSpider.disconnect(() => console.log('disconnected'))
-  });
+async function connect() {
+    if (!connected) {
+        await waitForCb(rollingSpider.connect.bind(rollingSpider));
+        await waitForCb(rollingSpider.setup.bind(rollingSpider));
+        conneted = true;
+    }
 }
 
-function extinguish() {
-  console.log('Going to extinguish, waiting for connect');
-  rollingSpider.connect(() => {
-    console.log('Connected to drone');
-    rollingSpider.setup(() => {
-      console.log('Connected to drone', rollingSpider.name);
-      temporal.queue([{
-        delay: 1000,
-        task() {
-          console.log('takeoff');
-          rollingSpider.flatTrim();
-          rollingSpider.takeOff();
-          rollingSpider.flatTrim();
-        },
-      },
-
-      {
-        delay: 2000,
-        task() {
-          console.log('forward');
-          rollingSpider.forward({
-            steps: 14,
-          });
-        },
-      },
-      {
-        delay: 4000,
-        task: land,
-      },
-      ]);
-    });
+async function extinguish() {
+  await connect();
+  // takeOff
+  await delay(1000);
+  takeOff();
+  // forward
+  await delay(2000);
+  rollingSpider.forward({
+    steps: 7,
   });
 }
 
@@ -64,5 +86,6 @@ module.exports = {
   extinguish,
   emergancy,
   land,
-  debug
+  connect,
+  flip
 };

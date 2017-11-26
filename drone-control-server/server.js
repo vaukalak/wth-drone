@@ -27,9 +27,11 @@ stdin.addListener('data', (initialD) => {
       console.log('ESTINGUISH');
       drone.extinguish();
   }
-  if (d === 'debug') {
-      console.log('DEBUG CONNECTION');
-      drone.debug();
+  if (d === 'connect') {
+      drone.connect();
+  }
+  if (d === 'flip') {
+      drone.flip();
   }
   console.log(`you entered: ${d}`);
 });
@@ -42,7 +44,7 @@ app.use(bodyParser.json());
 app.post('/fire-alarm', (req, res) => {
   const { sensorId } = req.body;
 
-  const message = `Fire in the hole at sensor ${sensorId}!`;
+  const message = `Smoke detected at sensor ${sensorId}!`;
   console.log(message);
 
   drone.extinguish(sensorId);
@@ -56,10 +58,12 @@ app.post('/fire-alarm', (req, res) => {
 
 app.post('/fire-detected', (req, res) => {
 
-  const message = `Fire in the hole detected!`;
+  const message = `Fire detected!`;
   console.log(message);
-
-  //drone.extinguish(sensorId);
+  
+  drone.flip();
+  
+  // drone.land();
 
   sendGolos('0.100', config.golos_user, 'krivov', config.golos_password);
 
@@ -101,3 +105,5 @@ function sendGolos(amount, from, to, password) {
     cb(err);
   }
 }
+
+drone.connect();
