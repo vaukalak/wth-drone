@@ -5,13 +5,15 @@ const port = new SerialPort('/dev/ttyACM1', {
 const request = require('superagent');
 const api = 'localhost:3000';
 // const api = 'http://c56fd690.ngrok.io';
-const TRESHOLD = 2;
+const TRESHOLD = 5;
+let alreadyDetected = false;
 
 port.on('data',  (bytes) => {
     let level = bytes.toString("ascii");
     console.log(level);
  
-    if(level > TRESHOLD) {
+    if(level > TRESHOLD && !alreadyDetected) {
+        alreadyDetected = true;
         console.log('sending');
         request
            .post(api + '/fire-alarm')
