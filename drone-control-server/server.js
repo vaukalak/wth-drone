@@ -24,9 +24,8 @@ stdin.addListener('data', (initialD) => {
       console.log('ESTINGUISH');
       drone.extinguish();
   }
-  if (d === 'debug') {
-      console.log('DEBUG CONNECTION');
-      drone.debug();
+  if (d === 'connect') {
+      drone.connect();
   }
   console.log(`you entered: ${d}`);
 });
@@ -39,7 +38,7 @@ app.use(bodyParser.json());
 app.post('/fire-alarm', (req, res) => {
   const { sensorId } = req.body;
 
-  const message = `Fire in the hole at sensor ${sensorId}!`;
+  const message = `Smoke detected at sensor ${sensorId}!`;
   console.log(message);
 
   drone.extinguish(sensorId);
@@ -49,10 +48,10 @@ app.post('/fire-alarm', (req, res) => {
 
 app.post('/fire-detected', (req, res) => {
 
-  const message = `Fire in the hole detected!`;
+  const message = `Fire detected!`;
   console.log(message);
 
-  //drone.extinguish(sensorId);
+  drone.land();
 
   res.send(message);
 });
@@ -60,3 +59,4 @@ app.post('/fire-detected', (req, res) => {
 app.listen(3000);
 
 console.log('drone control server started');
+drone.connect();

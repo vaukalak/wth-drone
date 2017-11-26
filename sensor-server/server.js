@@ -1,11 +1,11 @@
 const SerialPort = require('serialport');
-const port = new SerialPort('/dev/ttyACM1', {
+const port = new SerialPort('/dev/ttyACM0', {
   baudRate: 9600
 });
 const request = require('superagent');
 const api = 'localhost:3000';
 // const api = 'http://c56fd690.ngrok.io';
-const TRESHOLD = 5;
+const TRESHOLD = 200;
 let alreadyDetected = false;
 
 port.on('data',  (bytes) => {
