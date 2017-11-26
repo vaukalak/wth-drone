@@ -67,17 +67,17 @@ app.post('/fire-detected', async (req, res) => {
   console.log(`Fire detected!`);
   
   drone.flip();
+  drone.flip();
   
-  await delay(3000);
+  await delay(2000);
 
   sendGolos('0.100', config.golos_user, 'krivov', config.golos_password);
 
-  res.send(message);
+  // res.send(message);
 });
 
 app.listen(3000);
-
-console.log('drone control server started');
+console.log('DRONE CONTROL CENTER IS STARTED');
 
 function checkBalance(name, cb) {
   try {
