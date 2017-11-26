@@ -8,6 +8,12 @@ const golos = require("./golos-js/lib/index");
 const app = express();
 const stdin = process.openStdin();
 
+const delay = time => new Promise(
+  (res) => {
+    setTimeout(() => { res(); }, time)
+  } 
+);
+
 stdin.addListener('data', (initialD) => {
   const d = initialD.toString().trim();
 
@@ -56,14 +62,13 @@ app.post('/fire-alarm', (req, res) => {
   res.send(message);
 });
 
-app.post('/fire-detected', (req, res) => {
+app.post('/fire-detected', async (req, res) => {
 
-  const message = `Fire detected!`;
-  console.log(message);
+  console.log(`Fire detected!`);
   
   drone.flip();
   
-  // drone.land();
+  await delay(3000);
 
   sendGolos('0.100', config.golos_user, 'krivov', config.golos_password);
 
@@ -106,4 +111,3 @@ function sendGolos(amount, from, to, password) {
   }
 }
 
-drone.connect();

@@ -10,7 +10,7 @@ const ourLog = (...args) => {
 let connected = false;
 
 const rollingSpider = new RollingSpider({
-    logger: console.log
+    // logger: console.log
 });
 
 const delay = time => new Promise(
@@ -44,7 +44,7 @@ function land() {
 function flip() {
     // flips
 
-    rollingSpider.frontFlip()
+    rollingSpider.frontFlip();
     // 
     // await delay(2000);
     // rollingSpider.backFlip()
@@ -61,18 +61,25 @@ function emergancy() {
 }
 
 async function connect() {
+    
     if (!connected) {
+        console.log('go to connect');
         await waitForCb(rollingSpider.connect.bind(rollingSpider));
         await waitForCb(rollingSpider.setup.bind(rollingSpider));
         conneted = true;
+        console.log('CONNECTED', rollingSpider.name);
     }
 }
 
 async function extinguish() {
-  await connect();
+   console.log('await connect');
+   await connect();
+
   // takeOff
+  console.log('next step - is takeoff');
   await delay(1000);
   takeOff();
+  console.log('next step is move forward');
   // forward
   await delay(2000);
   rollingSpider.forward({
