@@ -27,6 +27,9 @@ stdin.addListener('data', (initialD) => {
   if (d === 'connect') {
       drone.connect();
   }
+  if (d === 'flip') {
+      drone.flip();
+  }
   console.log(`you entered: ${d}`);
 });
 
@@ -50,8 +53,10 @@ app.post('/fire-detected', (req, res) => {
 
   const message = `Fire detected!`;
   console.log(message);
-
-  drone.land();
+  
+  drone.flip();
+  
+  // drone.land();
 
   res.send(message);
 });

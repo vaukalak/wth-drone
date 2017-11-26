@@ -38,8 +38,22 @@ function takeOff() {
 }
 
 function land() {
-  console.log('land');
   rollingSpider.land(landCb);
+}
+
+function flip() {
+    // flips
+
+    rollingSpider.frontFlip()
+    // 
+    // await delay(2000);
+    // rollingSpider.backFlip()
+    // 
+    // await delay(2000);
+    // rollingSpider.rightFlip()
+    // 
+    // await delay(2000);
+    // rollingSpider.leftFlip()
 }
 
 function emergancy() {
@@ -61,23 +75,9 @@ async function extinguish() {
   takeOff();
   // forward
   await delay(2000);
-  console.log('forward');
   rollingSpider.forward({
     steps: 7,
   });
-
-  // flips
-  await delay(2000);
-  rollingSpider.frontFlip()
-  
-  await delay(2000);
-  rollingSpider.backFlip()
-  
-  await delay(2000);
-  rollingSpider.rightFlip()
-  
-  await delay(2000);
-  rollingSpider.leftFlip()
 }
 
 
@@ -86,5 +86,6 @@ module.exports = {
   extinguish,
   emergancy,
   land,
-  connect
+  connect,
+  flip
 };
